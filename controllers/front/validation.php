@@ -89,6 +89,11 @@ class Ps_CashondeliveryValidationModuleFrontController extends ModuleFrontContro
 
     /**
      * Check if the context is valid
+     * - Cart is loaded
+     * - Cart has a Customer
+     * - Cart has a delivery address
+     * - Cart has an invoice address
+     * - Cart doesn't contains virtual product
      *
      * @return bool
      */
@@ -97,7 +102,8 @@ class Ps_CashondeliveryValidationModuleFrontController extends ModuleFrontContro
         return true === Validate::isLoadedObject($this->context->cart)
             && true === Validate::isUnsignedInt($this->context->cart->id_customer)
             && true === Validate::isUnsignedInt($this->context->cart->id_address_delivery)
-            && true === Validate::isUnsignedInt($this->context->cart->id_address_invoice);
+            && true === Validate::isUnsignedInt($this->context->cart->id_address_invoice)
+            && false === $this->context->cart->isVirtualCart();
     }
 
     /**
